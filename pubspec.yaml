@@ -1,0 +1,59 @@
+name: my_new_app
+description: "A new Flutter project."
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.0-290.4.beta
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # Firebase
+  firebase_core: ^4.2.1
+  firebase_auth: ^6.1.2
+  cloud_firestore: ^6.1.0
+  google_sign_in: ^5.4.0
+  flutter_facebook_auth: ^6.0.4
+  firebase_messaging: ^16.1.0
+
+  # UI & Utilities
+  google_fonts: ^6.3.3
+  cached_network_image: ^3.4.1
+  font_awesome_flutter: ^10.12.0
+  flutter_credit_card: ^4.1.0
+  curved_navigation_bar: ^1.0.6
+
+
+  # State & Network
+  provider: ^6.1.5+1
+  http: ^1.6.0
+
+  # Media
+  image_picker: ^1.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+  flutter_launcher_icons: ^0.14.4   # ✅ هنا الصح
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/aa/logo.png
+
+# 👇👇 ده جزء الأيقونة (لازم يكون برا flutter)
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/aa/logo.png"
+  min_sdk_android: 21
