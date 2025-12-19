@@ -79,7 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
   try {
     final user = await _authService.signInWithFacebook();
 if (user != null && mounted) {
-  // ✅ ابدأ الاستماع مباشرة بعد تسجيل الدخول
+
   Provider.of<NotificationProvider>(context, listen: false)
       .startListening(user.uid);
 

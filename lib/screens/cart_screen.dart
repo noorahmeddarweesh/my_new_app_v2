@@ -153,13 +153,9 @@ class CartScreen extends StatelessWidget {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              // حفظ نسخة من الكارت قبل التفريغ
+                        
                               final cartCopy = List<Map<String, dynamic>>.from(cartProvider.cart);
-
-                              // تفريغ الكارت
                               cartProvider.clearCart();
-
-                              // الانتقال لصفحة Checkout
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

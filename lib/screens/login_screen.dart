@@ -10,9 +10,6 @@ import 'forgot_password_screen.dart';
 import '../services/firebase_messaging_service.dart';
 import '../providers/notification_provider.dart';
 
-
-
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -37,7 +34,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  // ================= EMAIL LOGIN =================
   Future<void> _handleEmailLogin() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -51,9 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (user != null && mounted) {
         Provider.of<NotificationProvider>(context, listen: false)
-      .startListening(user.uid);
+            .startListening(user.uid);
         _goHome();
-    
       }
     } on FirebaseAuthException catch (e) {
       _showError(_firebaseError(e.code));
@@ -64,7 +59,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  // ================= GOOGLE LOGIN =================
   Future<void> _handleGoogleLogin() async {
     setState(() => isLoading = true);
 
@@ -73,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (user != null && mounted) {
         Provider.of<NotificationProvider>(context, listen: false)
-      .startListening(user.uid);
+            .startListening(user.uid);
         _goHome();
       }
     } catch (_) {
@@ -83,11 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  // ================= GO HOME + FETCH CART =================
   void _goHome() async {
-    // 🔥 مهم: تحميل كارت اليوزر بعد login
     await Provider.of<CartProvider>(context, listen: false).fetchCart();
-await FirebaseMessagingService().init();
+    await FirebaseMessagingService().init();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => MainLayout()),
@@ -114,9 +106,7 @@ await FirebaseMessagingService().init();
     }
   }
 
-  // ================= UI =================
-  Widget _socialIcon(
-      IconData icon, Color color, VoidCallback onTap) {
+  Widget _socialIcon(IconData icon, Color color, VoidCallback onTap) {
     return GestureDetector(
       onTap: isLoading ? null : onTap,
       child: Container(
@@ -181,35 +171,27 @@ await FirebaseMessagingService().init();
                 const SizedBox(height: 40),
                 Image.asset("assets/aa/logo.png", height: 90),
                 const SizedBox(height: 20),
-
                 const Text(
                   "Welcome Back",
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 ),
-
                 const SizedBox(height: 30),
-
                 _input(
                   icon: Icons.email,
                   hint: "Email",
                   focus: emailFocus,
                   onChanged: (v) => email = v,
-                  validator: (v) =>
-                      !v!.contains("@") ? "Invalid email" : null,
+                  validator: (v) => !v!.contains("@") ? "Invalid email" : null,
                 ),
-
                 const SizedBox(height: 15),
-
                 _input(
                   icon: Icons.lock,
                   hint: "Password",
                   obscure: true,
                   focus: passwordFocus,
                   onChanged: (v) => password = v,
-                  validator: (v) =>
-                      v!.length < 6 ? "Min 6 characters" : null,
+                  validator: (v) => v!.length < 6 ? "Min 6 characters" : null,
                 ),
-
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
@@ -221,9 +203,7 @@ await FirebaseMessagingService().init();
                     child: const Text("Forgot password?"),
                   ),
                 ),
-
                 const SizedBox(height: 20),
-
                 GestureDetector(
                   onTap: isLoading ? null : _handleEmailLogin,
                   child: Container(
@@ -235,21 +215,18 @@ await FirebaseMessagingService().init();
                     ),
                     child: Center(
                       child: isLoading
-                          ? const CircularProgressIndicator(
-                              color: Colors.white)
+                          ? const CircularProgressIndicator(color: Colors.white)
                           : const Text(
                               "Login",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 16),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
                             ),
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 25),
                 const Text("Or login with"),
                 const SizedBox(height: 15),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -260,9 +237,7 @@ await FirebaseMessagingService().init();
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 25),
-
                 GestureDetector(
                   onTap: () => Navigator.push(
                     context,

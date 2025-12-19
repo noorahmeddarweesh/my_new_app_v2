@@ -10,11 +10,9 @@ class FirebaseMessagingService {
   Future<void> init() async {
     print("🟡 [FCM] init started");
 
-    // 1️⃣ Permission
     final settings = await _messaging.requestPermission();
     print("🟢 [FCM] Permission status: ${settings.authorizationStatus}");
 
-    // 2️⃣ Get Token
     final token = await _messaging.getToken();
 
     if (token == null) {
@@ -29,7 +27,6 @@ class FirebaseMessagingService {
     print("🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥");
     print("");
 
-    // 3️⃣ Save token
     final user = _auth.currentUser;
     if (user == null) {
       print("❌ [FCM] No logged-in user");

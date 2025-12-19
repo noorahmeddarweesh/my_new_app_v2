@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../services/auth_service.dart';
 import 'reset_password_done_screen.dart';
+
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -10,9 +13,11 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
     with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
+  final AuthService _authService = AuthService();
 
   String? email;
   bool emailValid = true;
+  bool isLoading = false;
 
   late FocusNode emailFocus;
 
@@ -49,9 +54,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
           child: Column(
             children: [
               const SizedBox(height: 10),
-
               Image.asset("assets/aa/logo.png", height: 90),
-
               const SizedBox(height: 20),
               const Text(
                 "Reset Password",
@@ -66,9 +69,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey),
               ),
-
               const SizedBox(height: 30),
-
               // EMAIL FIELD
               AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
@@ -111,7 +112,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                   ),
                 ),
               ),
-
               if (!emailValid && !emailFocus.hasFocus)
                 Padding(
                   padding: const EdgeInsets.only(left: 12, top: 6),
@@ -120,11 +120,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                     style: TextStyle(color: Colors.red, fontSize: 12),
                   ),
                 ),
-
               const SizedBox(height: 30),
-
               _blackButton("Send Reset Link"),
-
               const SizedBox(height: 20),
             ],
           ),
@@ -135,15 +132,28 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
 
   Widget _blackButton(String text) {
     return GestureDetector(
-      onTap: () {
-  if (_formKey.currentState!.validate()) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const ResetPasswordDoneScreen()),
-    );
-  }
-},
+      onTap: () async {
+        if (_formKey.currentState!.validate()) {
+          setState(() => isLoading = true);
 
+          try {
+            await _authService.resetPassword(email: email!.trim());
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const ResetPasswordDoneScreen(),
+              ),
+            );
+          } on FirebaseAuthException catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(e.message ?? "Something went wrong")),
+            );
+          } finally {
+            setState(() => isLoading = false);
+          }
+        }
+      },
       child: Container(
         width: double.infinity,
         height: 50,
@@ -152,10 +162,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
           borderRadius: BorderRadius.circular(30),
         ),
         child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
-          ),
+          child: isLoading
+              ? const CircularProgressIndicator(color: Colors.white)
+              : Text(
+                  text,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                ),
         ),
       ),
     );

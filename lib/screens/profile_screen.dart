@@ -11,23 +11,16 @@ import 'login_screen.dart';
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-  // ================= LOGOUT FUNCTION =================
   Future<void> handleLogout(BuildContext context) async {
     final profileProvider =
         Provider.of<ProfileProvider>(context, listen: false);
     profileProvider.clear();
-
-    // لو عندك Providers تانية ممكن تمسحيها هنا
-    // Provider.of<CartProvider>(context, listen: false).clear();
-    // Provider.of<WishlistProvider>(context, listen: false).clear();
-    // Provider.of<OrderProvider>(context, listen: false).clear();
 
     await Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => const LoginScreen()),
     );
   }
-  // ==================================================
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +29,10 @@ class ProfileScreen extends StatelessWidget {
       body: SafeArea(
         child: Consumer<ProfileProvider>(
           builder: (context, profile, child) {
-            // ====== Loading ======
             if (profile.isLoading) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            // ====== تحديد صورة المستخدم ======
             ImageProvider imageProvider;
             if (profile.profileImage.startsWith('assets/')) {
               imageProvider = AssetImage(profile.profileImage);

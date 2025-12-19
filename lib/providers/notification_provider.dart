@@ -12,9 +12,8 @@ class NotificationProvider extends ChangeNotifier {
   List<Map<String, dynamic>> get notifications => _notifications;
   int get unreadCount => _unreadCount;
 
-  // 🔹 يبدأ الاستماع للإشعارات لأي UID
   void startListening(String uid) {
-    _subscription?.cancel(); // لو كان فيه اشتراك قديم
+    _subscription?.cancel();
     _subscription = _firestore
         .collection('notifications')
         .where('userId', isEqualTo: uid)
@@ -48,7 +47,6 @@ class NotificationProvider extends ChangeNotifier {
     }
   }
 
-  // 🔹 تعليم إشعار كمقروء وتحديث الـ unreadCount فورًا
   Future<void> markAsRead(String id) async {
     await _firestore.collection('notifications').doc(id).update({"isRead": true});
 

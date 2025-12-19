@@ -15,7 +15,6 @@ class _WishlistScreenState extends State<WishlistScreen> {
   @override
   void initState() {
     super.initState();
-    // جلب الـ wishlist عند فتح الصفحة
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final wishlistProvider = Provider.of<WishlistProvider>(context, listen: false);
       wishlistProvider.fetchWishlist();

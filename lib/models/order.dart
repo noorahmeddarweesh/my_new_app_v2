@@ -9,7 +9,7 @@ class Order {
   final double totalPrice;
   final List<Map<String, dynamic>> cart;
   final DateTime date;
-    String status;
+  String status;
 
   Order({
     required this.id,
@@ -20,15 +20,14 @@ class Order {
     required this.totalPrice,
     required this.cart,
     required this.date,
-        this.status = 'Processed',
+    this.status = 'Processed',
   });
 
-  // تحويل من Firestore document
   factory Order.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return Order(
       id: doc.id,
-      userId: data['userId'], // <-- مهم
+      userId: data['userId'],
       fullName: data['fullName'],
       address: data['address'],
       phone: data['phone'],
@@ -38,7 +37,6 @@ class Order {
     );
   }
 
-  // لعمل نسخة مع id جديد لو لزم الأمر
   Order copyWith({
     String? id,
     String? userId,

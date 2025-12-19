@@ -61,61 +61,34 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
     final normalized = category.replaceAll("-", " ").trim();
 
     final clothingKeywords = [
-      "shirt",
-      "tshirt",
-      "dress",
-      "hoodie",
-      "clothe",
-      "jacket",
-      "jeans",
-      "pants",
-      "skirt",
-      "blouse",
-      "top"
+      "shirt", "tshirt", "dress", "hoodie", "clothe", "jacket", "jeans",
+      "pants", "skirt", "blouse", "top"
     ];
-
-    final shoesKeywords = [
-      "shoe",
-      "sneaker",
-      "boot",
-      "heels",
-      "sandal"
-    ];
+    final shoesKeywords = ["shoe", "sneaker", "boot", "heels", "sandal"];
 
     if (clothingKeywords.any((k) => normalized == k || normalized.startsWith("$k "))) {
       return ["S", "M", "L", "XL", "XXL"];
     }
-
     if (shoesKeywords.any((k) => normalized == k || normalized.startsWith("$k "))) {
       return ["36","37","38","39","40","41","42","43","44","45"];
     }
-
     return [];
   }
 
   List<String> _getColorsForProduct(Map product) {
     List<String> colors = [];
-
     try {
       if (product["meta"] != null && product["meta"]["color"] != null) {
         colors.add(product["meta"]["color"].toString());
       }
-
       if (product["tags"] != null) {
-        final commonColors = [
-          "black", "white", "red", "blue", "green",
-          "yellow", "pink", "brown", "gray", "beige"
-        ];
-
+        final commonColors = ["black","white","red","blue","green","yellow","pink","brown","gray","beige"];
         for (var t in product["tags"]) {
           final tag = t.toString().toLowerCase();
-          if (commonColors.contains(tag)) {
-            colors.add(t.toString());
-          }
+          if (commonColors.contains(tag)) colors.add(t.toString());
         }
       }
     } catch (e) {}
-
     return colors.toSet().toList();
   }
 
@@ -179,7 +152,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
           ),
         ),
       ),
-
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 120),
         child: Column(
@@ -213,9 +185,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                 ),
               ),
             ),
-
             const SizedBox(height: 15),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
@@ -232,7 +202,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                 ),
               ),
             ),
-
             const SizedBox(height: 25),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -242,11 +211,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                   Text(item['title'] ?? '',
                       style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 10),
-
                   Text("\$${item['price']}",
                       style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-
                   Row(
                     children: [
                       const Icon(Icons.star, color: Colors.amber, size: 20),
@@ -258,33 +225,25 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                           style: const TextStyle(color: Colors.grey)),
                     ],
                   ),
-
                   if (sizesList.isNotEmpty) _sizeSelector(sizesList),
-
                   if (colorsList.isNotEmpty) _colorSelector(colorsList),
-
                   const SizedBox(height: 25),
                   const Text("Description",
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                   const SizedBox(height: 10),
-
                   Text(item["description"] ?? "",
                       style: const TextStyle(fontSize: 15)),
                   const SizedBox(height: 25),
-
                   const Text("Highlights",
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                   const SizedBox(height: 10),
                   _highlight("- High quality material"),
                   _highlight("- Fast delivery"),
                   _highlight("- Best seller"),
-
                   const SizedBox(height: 40),
-
                   const Text("Related Products",
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 10),
-
                   SizedBox(
                     height: 260,
                     child: ListView.separated(
@@ -303,7 +262,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
           ],
         ),
       ),
-
       bottomNavigationBar: _bottomBar(cartProvider, cartQuantity),
     );
   }
@@ -509,10 +467,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                 ),
               ],
             ),
-
             const Padding(
                 padding: EdgeInsets.all(8.0), child: SizedBox.shrink()),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(

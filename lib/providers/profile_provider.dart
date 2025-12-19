@@ -3,17 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileProvider with ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-
-  // ====== البيانات اللي UI مستخدمها (مش بنغيرها) ======
   String userName = "";
   String email = "";
+  
   String profileImage = "assets/images/default_profile.png";
-
-  // ====== بيانات مساعدة ======
   String? uid;
   bool isLoading = false;
 
-  // ====== تحميل بيانات المستخدم من Firestore ======
   Future<void> loadUser(String userId) async {
     uid = userId;
     isLoading = true;
@@ -40,7 +36,6 @@ class ProfileProvider with ChangeNotifier {
     }
   }
 
-  // ====== تحديثات محلية (UI) ======
   void updateName(String newName) {
     userName = newName;
     notifyListeners();
@@ -56,7 +51,6 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // ====== 🆕 حفظ التعديلات في Firestore + تحديث UI ======
   Future<void> saveProfileToFirestore({
     required String fullName,
     required String newEmail,
@@ -75,8 +69,6 @@ class ProfileProvider with ChangeNotifier {
         if (phone != null) 'phone': phone,
         if (newImage != null) 'profileImage': newImage,
       });
-
-      // تحديث محلي (نفس السلوك القديم)
       userName = fullName;
       email = newEmail;
       if (newImage != null) profileImage = newImage;
@@ -87,7 +79,6 @@ class ProfileProvider with ChangeNotifier {
     }
   }
 
-  // ====== Logout ======
   void clear() {
     uid = null;
     userName = "";

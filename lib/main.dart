@@ -11,17 +11,12 @@ import 'providers/notification_provider.dart';
 
 import 'screens/splash_screen.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Firebase init
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  // Local notifications init (Welcome notification)
-  
 
   runApp(
     MultiProvider(
@@ -43,7 +38,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: ' shopy',
+      title: 'shopy',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,

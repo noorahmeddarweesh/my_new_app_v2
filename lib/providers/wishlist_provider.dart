@@ -9,8 +9,6 @@ class WishlistProvider with ChangeNotifier {
   List<Map<String, dynamic>> wishlist = [];
 
   String get _uid => _auth.currentUser!.uid;
-
-  /// 🔥 FETCH WISHLIST FROM FIRESTORE
   Future<void> fetchWishlist() async {
     final snapshot = await _db
         .collection('users')
@@ -28,7 +26,6 @@ class WishlistProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /// 🔥 TOGGLE WISHLIST
   Future<void> toggleWishlist(Map<String, dynamic> product) async {
     final docRef = _db
         .collection('users')

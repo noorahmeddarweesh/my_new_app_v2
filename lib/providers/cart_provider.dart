@@ -32,7 +32,6 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /// 🔥 ADD TO CART
   Future<void> addToCart(Map<String, dynamic> product) async {
     final docRef = _db
         .collection('users')
@@ -58,7 +57,6 @@ class CartProvider with ChangeNotifier {
     await fetchCart();
   }
 
-  /// 🔥 INCREASE
   Future<void> increaseQuantity(String productId, int currentQty) async {
     await _db
         .collection('users')
@@ -70,7 +68,6 @@ class CartProvider with ChangeNotifier {
     await fetchCart();
   }
 
-  /// 🔥 DECREASE
   Future<void> decreaseQuantity(String productId, int currentQty) async {
     if (currentQty > 1) {
       await _db
@@ -83,7 +80,6 @@ class CartProvider with ChangeNotifier {
     await fetchCart();
   }
 
-  /// 🔥 REMOVE ITEM
   Future<void> removeItem(String productId) async {
     await _db
         .collection('users')
@@ -95,7 +91,6 @@ class CartProvider with ChangeNotifier {
     await fetchCart();
   }
 
-  /// 🔥 TOTAL
   double get total {
     double sum = 0;
     for (var p in _cart) {
@@ -103,8 +98,6 @@ class CartProvider with ChangeNotifier {
     }
     return sum;
   }
-
-  /// 🔥 CLEAR CART FROM FIRESTORE (after checkout)
   Future<void> clearCart() async {
     final snapshot = await _db
         .collection('users')
@@ -119,8 +112,6 @@ class CartProvider with ChangeNotifier {
     _cart = [];
     notifyListeners();
   }
-
-  /// 🔥 VERY IMPORTANT: CLEAR LOCAL DATA ON LOGOUT
   void clearLocalCart() {
     _cart = [];
     notifyListeners();
